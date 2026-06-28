@@ -15,6 +15,7 @@ assembly are written out by hand in `services/retriever.py` and
 
 ## Architecture
 
+```mermaid
 graph TD
     A[File Upload] --> B(services/extractor.py)
     B --> C(services/chunker.py)
