@@ -1,0 +1,35 @@
+fastapi==0.115.0
+uvicorn[standard]==0.30.6
+python-multipart==0.0.9
+pydantic==2.9.2
+pydantic-settings==2.5.2
+email-validator==2.2.0
+
+# Document extraction
+PyMuPDF==1.24.10
+
+# Chunking & embeddings
+sentence-transformers==3.1.1
+nltk==3.9.1
+numpy==1.26.4
+
+# LLM
+openai==1.51.0
+
+# Vector store
+qdrant-client==1.11.2
+
+# SQL metadata store
+sqlalchemy[asyncio]==2.0.35
+asyncpg==0.29.0
+
+# Chat memory
+redis==5.0.8
+
+# Booking date/time parsing
+python-dateutil==2.9.0.post0
+
+# Tests
+pytest==8.3.3
+pytest-asyncio==0.24.0
+httpx==0.27.2
