@@ -17,17 +17,18 @@ assembly are written out by hand in `services/retriever.py` and
 
 ```mermaid
 graph TD
-    A[File Upload] --> B(services/extractor.py)
-    B --> C(services/chunker.py)
-    C --> D(services/embedder.py)
-    D --> E[(Qdrant Vector DB)]
+    A[File Upload] --> B("services/extractor.py")
+    B --> C("services/chunker.py")
+    C --> D("services/embedder.py")
+    D --> E[Qdrant Vector DB]
     
-    User[User Query] --> F(api/v1/chat.py)
-    F --> G(services/retriever.py)
+    User[User Query] --> F("api/v1/chat.py")
+    F --> G("services/retriever.py")
     G --> E
-    F --> H(services/llm.py)
-    H --> I[(PostgreSQL / Redis)]
+    F --> H("services/llm.py")
+    H --> I[PostgreSQL / Redis]
 
+```
 ### Chunking strategies
 
 - **`fixed`** — sliding character window (`chunk_size`, `chunk_overlap`).
