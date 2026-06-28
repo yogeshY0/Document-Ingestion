@@ -15,27 +15,17 @@ assembly are written out by hand in `services/retriever.py` and
 
 ## Architecture
 
-```
-api/v1/ingest.py   POST /api/v1/ingest        — file upload pipeline
-api/v1/chat.py      POST /api/v1/chat          — multi-turn RAG + booking
-                    DELETE /api/v1/chat/{id}    — clear a session
-                    GET /api/v1/bookings        — list confirmed bookings
-
-services/extractor.py   bytes -> DocumentRecord (PyMuPDF for PDF, decode for TXT)
-services/chunker.py     DocumentRecord -> ChunkRecord[]  (fixed | semantic)
-services/embedder.py    ChunkRecord[] -> embedded ChunkRecord[]  (local | openai)
-services/retriever.py   query -> embed -> Qdrant search -> SourceChunk[]
-services/llm.py         manual prompt assembly + OpenAI calls (RAG answer,
-                         booking-slot extraction via tool calling)
-services/booking.py     deterministic validation/normalization of booking slots
-
-db/qdrant_store.py      vector store (collection mgmt, upsert, search)
-db/postgres.py          SQLAlchemy async ORM: documents, chunk_metadata, bookings
-db/redis_store.py       per-session chat history + booking flow state
-
-core/config.py          pydantic-settings, single source of config
-models/schemas.py       all Pydantic models (both APIs)
-```
+graph TD
+    A[File Upload] --> B(services/extractor.py)
+    B --> C(services/chunker.py)
+    C --> D(services/embedder.py)
+    D --> E[(Qdrant Vector DB)]
+    
+    User[User Query] --> F(api/v1/chat.py)
+    F --> G(services/retriever.py)
+    G --> E
+    F --> H(services/llm.py)
+    H --> I[(PostgreSQL / Redis)]
 
 ### Chunking strategies
 
